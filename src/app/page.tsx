@@ -5,6 +5,7 @@ import type { Station } from '@/lib/types';
 import { initialStations } from '@/lib/stations';
 import StationCard from '@/components/station-card';
 import Player from '@/components/player';
+import AddStationDialog from '@/components/add-station-dialog';
 import { Radio } from 'lucide-react';
 
 export default function Home() {
@@ -31,15 +32,27 @@ export default function Home() {
       )
     );
   };
+
+  const handleAddStation = (newStationData: { name: string; streamUrl: string }) => {
+    const newStation: Station = {
+      ...newStationData,
+      id: crypto.randomUUID(),
+      imageUrl: 'https://placehold.co/300x200.png',
+    };
+    setStations(prevStations => [...prevStations, newStation]);
+  };
   
   const playingStation = useMemo(() => isPlaying ? currentStation : null, [isPlaying, currentStation]);
 
   return (
     <div className="min-h-screen bg-background text-foreground pb-28">
       <header className="p-6 border-b border-border/40 bg-card/50">
-        <div className="container mx-auto flex items-center gap-4">
-          <Radio className="w-8 h-8 text-primary" />
-          <h1 className="text-3xl font-bold text-primary font-headline">AudioCaster</h1>
+        <div className="container mx-auto flex items-center justify-between gap-4">
+          <div className="flex items-center gap-4">
+            <Radio className="w-8 h-8 text-primary" />
+            <h1 className="text-3xl font-bold text-primary font-headline">AudioCaster</h1>
+          </div>
+          <AddStationDialog onAddStation={handleAddStation} />
         </div>
       </header>
 
