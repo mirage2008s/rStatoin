@@ -49,4 +49,12 @@ export const initialStations: Station[] = [
     streamUrl: 'https://stream-relay-geo.ntslive.net/stream',
     imageUrl: 'https://placehold.co/300x200.png',
   },
+  {
+    id: '9',
+    name: 'CBS News',
+    streamUrl: 'https://cbs-news-2-samsung.amagi.tv/playlist.m3u8',
+    imageUrl: 'https://placehold.co/300x200.png',
+    genre: 'News',
+    language: 'English',
+  }
 ];

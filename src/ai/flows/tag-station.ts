@@ -10,7 +10,6 @@
 
 import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
-import wav from 'wav';
 
 const DetectStationGenreAndLanguageInputSchema = z.object({
   audioDataUri: z

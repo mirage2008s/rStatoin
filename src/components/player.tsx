@@ -4,8 +4,9 @@ import { useEffect, useRef, useState } from 'react';
 import type { Station } from '@/lib/types';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { Play, Pause, Mic, Square, Download } from 'lucide-react';
+import { Play, Pause, Mic, Square } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import Hls from 'hls.js';
 
 interface PlayerProps {
   station: Station;
@@ -15,6 +16,7 @@ interface PlayerProps {
 
 export default function Player({ station, isPlaying, onPlayPause }: PlayerProps) {
   const audioRef = useRef<HTMLAudioElement>(null);
+  const hlsRef = useRef<Hls | null>(null);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const recordedChunksRef = useRef<Blob[]>([]);
   const [isRecording, setIsRecording] = useState(false);
@@ -24,24 +26,70 @@ export default function Player({ station, isPlaying, onPlayPause }: PlayerProps)
     const audio = audioRef.current;
     if (!audio) return;
 
+    const isM3u8 = station.streamUrl.endsWith('.m3u8');
+
+    if (hlsRef.current) {
+      hlsRef.current.destroy();
+      hlsRef.current = null;
+    }
+
     if (isPlaying) {
-      if (audio.src !== station.streamUrl) {
-        audio.src = station.streamUrl;
-        audio.crossOrigin = 'anonymous';
-      }
-      audio.play().catch(e => {
-        console.error("Error playing audio:", e);
-        toast({
-            variant: "destructive",
-            title: "Playback Error",
-            description: "Could not play the selected station."
+      if (isM3u8 && Hls.isSupported()) {
+        const hls = new Hls();
+        hlsRef.current = hls;
+        hls.loadSource(station.streamUrl);
+        hls.attachMedia(audio);
+        hls.on(Hls.Events.MANIFEST_PARSED, () => {
+          audio.play().catch(e => {
+            console.error("Error playing HLS audio:", e);
+            toast({
+                variant: "destructive",
+                title: "Playback Error",
+                description: "Could not play the selected station."
+            });
+            onPlayPause();
+          });
         });
-        onPlayPause(); // Toggle state back
-      });
+        hls.on(Hls.Events.ERROR, (event, data) => {
+            if (data.fatal) {
+                console.error('HLS fatal error:', data);
+                 toast({
+                    variant: "destructive",
+                    title: "Playback Error",
+                    description: "An error occurred with the HLS stream."
+                });
+                onPlayPause();
+            }
+        });
+      } else {
+        if (audio.src !== station.streamUrl) {
+            audio.src = station.streamUrl;
+        }
+        audio.play().catch(e => {
+            console.error("Error playing audio:", e);
+            toast({
+                variant: "destructive",
+                title: "Playback Error",
+                description: "Could not play the selected station."
+            });
+            onPlayPause();
+        });
+      }
     } else {
       audio.pause();
+      if (audio.src) {
+        audio.src = '';
+      }
     }
-  }, [isPlaying, station.streamUrl, onPlayPause, toast]);
+    
+    return () => {
+        if (hlsRef.current) {
+            hlsRef.current.destroy();
+            hlsRef.current = null;
+        }
+    }
+
+  }, [isPlaying, station, onPlayPause, toast]);
   
   const startRecording = () => {
     const audio = audioRef.current;
@@ -112,7 +160,7 @@ export default function Player({ station, isPlaying, onPlayPause }: PlayerProps)
 
   return (
     <div className="fixed bottom-0 left-0 right-0 p-2 sm:p-4 z-50">
-      <audio ref={audioRef} id="audio-player" />
+      <audio ref={audioRef} id="audio-player" crossOrigin="anonymous" />
       <Card className="container mx-auto p-3 sm:p-4 shadow-2xl bg-card/95 backdrop-blur-sm">
         <div className="flex items-center justify-between gap-4">
           <div className='flex-shrink min-w-0'>
