@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Play, Pause, Mic, Square } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
-import Hls from 'hls.js';
+import type Hls from 'hls.js';
 
 interface PlayerProps {
   station: Station;
@@ -28,55 +28,80 @@ export default function Player({ station, isPlaying, onPlayPause }: PlayerProps)
 
     const isM3u8 = station.streamUrl.endsWith('.m3u8');
 
-    if (hlsRef.current) {
-      hlsRef.current.destroy();
-      hlsRef.current = null;
-    }
+    const playHlsStream = async () => {
+      try {
+        const HlsModule = await import('hls.js');
+        const Hls = HlsModule.default;
+        if (Hls.isSupported()) {
+          if (hlsRef.current) {
+            hlsRef.current.destroy();
+          }
+          const hls = new Hls();
+          hlsRef.current = hls;
+          hls.loadSource(station.streamUrl);
+          hls.attachMedia(audio);
+          hls.on(Hls.Events.MANIFEST_PARSED, () => {
+            audio.play().catch(e => {
+              console.error("Error playing HLS audio:", e);
+              toast({
+                variant: "destructive",
+                title: "Playback Error",
+                description: "Could not play the selected station."
+              });
+              onPlayPause();
+            });
+          });
+          hls.on(Hls.Events.ERROR, (event, data) => {
+            if (data.fatal) {
+              console.error('HLS fatal error:', data);
+              toast({
+                variant: "destructive",
+                title: "Playback Error",
+                description: "An error occurred with the HLS stream."
+              });
+              onPlayPause();
+            }
+          });
+        } else {
+          playStandardStream();
+        }
+      } catch (error) {
+        console.error("Failed to load hls.js", error);
+        playStandardStream();
+      }
+    };
+
+    const playStandardStream = () => {
+      if (hlsRef.current) {
+        hlsRef.current.destroy();
+        hlsRef.current = null;
+      }
+      if (audio.src !== station.streamUrl) {
+        audio.src = station.streamUrl;
+      }
+      audio.play().catch(e => {
+        console.error("Error playing audio:", e);
+        toast({
+          variant: "destructive",
+          title: "Playback Error",
+          description: "Could not play the selected station."
+        });
+        onPlayPause();
+      });
+    };
 
     if (isPlaying) {
-      if (isM3u8 && Hls.isSupported()) {
-        const hls = new Hls();
-        hlsRef.current = hls;
-        hls.loadSource(station.streamUrl);
-        hls.attachMedia(audio);
-        hls.on(Hls.Events.MANIFEST_PARSED, () => {
-          audio.play().catch(e => {
-            console.error("Error playing HLS audio:", e);
-            toast({
-                variant: "destructive",
-                title: "Playback Error",
-                description: "Could not play the selected station."
-            });
-            onPlayPause();
-          });
-        });
-        hls.on(Hls.Events.ERROR, (event, data) => {
-            if (data.fatal) {
-                console.error('HLS fatal error:', data);
-                 toast({
-                    variant: "destructive",
-                    title: "Playback Error",
-                    description: "An error occurred with the HLS stream."
-                });
-                onPlayPause();
-            }
-        });
+      if (isM3u8) {
+        playHlsStream();
       } else {
-        if (audio.src !== station.streamUrl) {
-            audio.src = station.streamUrl;
-        }
-        audio.play().catch(e => {
-            console.error("Error playing audio:", e);
-            toast({
-                variant: "destructive",
-                title: "Playback Error",
-                description: "Could not play the selected station."
-            });
-            onPlayPause();
-        });
+        playStandardStream();
       }
     } else {
       audio.pause();
+      if (hlsRef.current) {
+        hlsRef.current.destroy();
+        hlsRef.current = null;
+      }
       if (audio.src) {
         audio.src = '';
       }
