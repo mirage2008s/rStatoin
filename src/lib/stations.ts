@@ -3,14 +3,14 @@ import type { Station } from './types';
 export const initialStations: Station[] = [
   {
     id: '1',
-    name: 'KUTX 98.9',
-    streamUrl: 'https://kut.stream.publicradio.org/kutx_live.mp3',
+    name: 'VOV3',
+    streamUrl: 'https://str.vov.gov.vn/vovlive/vov3.sdp_aac/chunklist_w1816496431.m3u8',
     imageUrl: 'https://placehold.co/300x200.png',
   },
   {
     id: '2',
-    name: 'VRT Studio Brussel',
-    streamUrl: 'https://icecast.vrt.be/stubru-high.mp3',
+    name: 'Zing MP3 - VN Radio',
+    streamUrl: 'https://vnso-pt-48-tf-multi-playlist-zmp3.zmdcdn.me/JB2zPitWC-s/zhls/playback-realtime/audio/6ddadf76e3330a6d5322/audio.m3u8',
     imageUrl: 'https://placehold.co/300x200.png',
   }
 ];
