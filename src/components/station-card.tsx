@@ -25,13 +25,13 @@ export default function StationCard({
 
   return (
     <div className="h-80 bg-card/80 backdrop-blur-lg rounded-2xl shadow-lg overflow-hidden flex flex-col transition-all duration-300 hover:scale-105 hover:shadow-xl hover:bg-card/90 group">
-      <div className="relative">
+      <div className="relative h-40">
         <Image
           src={station.imageUrl}
           alt={station.name}
           fill
-          sizes="100vw"
-          className="w-full h-full object-cover rounded-t-2xl transition-all duration-300 group-hover:scale-105"
+          sizes="(max-width: 768px) 100vw, 33vw"
+          className="object-cover"
           data-ai-hint="radio station abstract"
         />
         <span className="absolute top-3 left-3 bg-primary text-xs text-white font-bold px-3 py-1 rounded-full shadow">
