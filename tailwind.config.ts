@@ -10,10 +10,10 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        body: ['Inter', 'sans-serif'],
-        headline: ['Inter', 'sans-serif'],
-        code: ['monospace'],
-      },
+          body: ['Quicksand', 'sans-serif'],
+          headline: ['Quicksand', 'sans-serif'],
+          code: ['monospace'],
+        },
       colors: {
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
@@ -26,7 +26,7 @@ export default {
           foreground: 'hsl(var(--popover-foreground))',
         },
         primary: {
-          DEFAULT: 'hsl(var(--primary))',
+          DEFAULT: '#2D8D72',
           foreground: 'hsl(var(--primary-foreground))',
         },
         secondary: {

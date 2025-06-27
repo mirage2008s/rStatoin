@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
+import { Heart, Share2 } from 'lucide-react';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Play, Pause } from 'lucide-react';
 import type { Station } from '@/lib/types';
@@ -14,7 +15,6 @@ interface StationCardProps {
   isPlaying: boolean;
 }
 
-
 export default function StationCard({
   station,
   onPlayPause,
@@ -24,32 +24,48 @@ export default function StationCard({
   const [isExpanded, setIsExpanded] = useState(false);
 
   return (
-    <div className="flex flex-col items-center">
-      <Card className="relative w-40 h-32 flex flex-col items-center justify-center overflow-hidden rounded-2xl transition-all duration-300 hover:shadow-lg hover:-translate-y-1 cursor-pointer" onClick={() => setIsExpanded(!isExpanded)}>
-        <div className="relative w-full h-full">
-          <Image
-            src={station.imageUrl}
-            alt={station.name}
-            fill
-            className="object-cover"
-            data-ai-hint="radio station abstract"
-          />
-          <div className="absolute inset-0 flex items-center justify-center">
-            <Button variant="secondary" size={"icon"}  className="rounded-full w-14 h-12" onClick={(e) => { e.stopPropagation(); onPlayPause(); }}>
-              {isCurrent && isPlaying ? (<Pause/>) : (<Play/>)}
+    <div className="h-80 bg-card/80 backdrop-blur-lg rounded-2xl shadow-lg overflow-hidden flex flex-col transition-all duration-300 hover:scale-105 hover:shadow-xl hover:bg-card/90 group">
+      <div className="relative">
+        <Image
+          src={station.imageUrl}
+          alt={station.name}
+          fill
+          sizes="100vw"
+          className="w-full h-full object-cover rounded-t-2xl transition-all duration-300 group-hover:scale-105"
+          data-ai-hint="radio station abstract"
+        />
+        <span className="absolute top-3 left-3 bg-primary text-xs text-white font-bold px-3 py-1 rounded-full shadow">
+          {station.badge || 'Radio'}
+        </span>
+      </div>
+      <div className="flex-1 flex flex-col px-6 py-4">
+        <div className="text-xs text-primary font-semibold mb-1">NOW PLAYING</div>
+        <div className="text-sm text-primary mb-4">{station.nowPlaying}</div>
+        <div className="mt-auto flex flex-col gap-4">
+          <div className="flex items-center gap-3">
+            <Button
+              onClick={onPlayPause}
+              className="flex items-center gap-2 px-4 py-2 rounded-full font-semibold text-white bg-primary relative overflow-hidden transition-all duration-300 shadow-lg hover:scale-105 hover:bg-primary/90"
+            >
+              <span className="relative z-10 flex items-center gap-2">
+                {isCurrent && isPlaying ? (<Pause className="w-5 h-5" />) : (<Play className="w-5 h-5" />)}
+                {isCurrent && isPlaying ? 'Pause' : 'Tune In'}
+              </span>
             </Button>
+            <button className="p-2 rounded-full hover:bg-gray-100 transition">
+              <Heart className="w-5 h-5 text-gray-300" />
+            </button>
+            <button className="p-2 rounded-full hover:bg-gray-100 transition">
+              <Share2 className="w-5 h-5 text-gray-300" />
+            </button>
+          </div>
+          <div className="border-t border-gray-700 pt-3 flex justify-center">
+            <a href="#" className="text-sm text-primary hover:underline font-medium">
+              More info &darr;
+            </a>
           </div>
         </div>
-        <div className="absolute bottom-2 text-white text-sm font-bold text-center w-full px-2 truncate">
-          {station.name}
-        </div>
-      </Card>
-      {isExpanded && (
-        <div className="mt-2 p-4 bg-gray-100 rounded-md w-32 text-center">
-          <p className="text-sm">{station.description || "No description available."}</p>
-          {/* Add more station information or controls here if needed */}
-        </div>
-      )}
       </div>
+    </div>
   );
 }
