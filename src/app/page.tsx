@@ -27,14 +27,14 @@ export default function Home() {
         <div className="container mx-auto flex items-center justify-between gap-4">
           <div className="flex items-center gap-4">
             <Radio className="w-8 h-8 text-primary" />
-            <h1 className="text-3xl font-bold text-primary font-headline">AudioCaster</h1>
+            <h1 className="text-3xl font-bold text-primary font-headline">rStatoni</h1>
           </div>
         </div>
       </header>
 
       <main className="container mx-auto p-6">
-        <h2 className="text-2xl font-semibold mb-6 font-headline">Stations</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <h2 className="text-xl font-semibold mb-6 font-headline">Stations</h2>
+        <div className="flex flex-wrap gap-6">
           {stations.map(station => (
             <StationCard
               key={station.id}
