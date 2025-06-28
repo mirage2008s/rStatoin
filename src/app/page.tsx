@@ -5,7 +5,7 @@ import type { Station } from '@/lib/types';
 import { initialStations } from '@/lib/stations';
 import StationCard from '@/components/station-card';
 import Player from '@/components/player';
-import { Radio } from 'lucide-react';
+import { Cctv, Radio } from 'lucide-react';
 
 export default function Home() {
   const [stations] = useState<Station[]>(initialStations);
@@ -33,8 +33,11 @@ export default function Home() {
       </header>
 
       <main className="container mx-auto p-6">
-        <h2 className="text-xl font-semibold mb-6 font-headline">Stations</h2>
-        <div className="flex flex-wrap gap-6">
+        <div className="mb-8">
+          <h2 className="text-2xl font-semibold text-primary mb-2">🤤Hello from the other side</h2>
+          <p className="text-muted-foreground">Discover a variety of radio stations from around the world.</p>
+        </div>
+        <div className="flex flex-wrap gap-6 justify-center items-center">
           {stations.map(station => (
             <StationCard
               key={station.id}

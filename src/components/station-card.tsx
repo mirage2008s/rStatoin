@@ -24,7 +24,7 @@ export default function StationCard({
   const [isExpanded, setIsExpanded] = useState(false);
 
   return (
-    <div className="h-80 bg-card/80 backdrop-blur-lg rounded-2xl shadow-lg overflow-hidden flex flex-col transition-all duration-300 hover:scale-105 hover:shadow-xl hover:bg-card/90 group">
+    <div className="h-96 w-72 bg-card/80 backdrop-blur-lg rounded-2xl shadow-lg overflow-hidden flex flex-col transition-all duration-300 hover:scale-105 hover:shadow-xl hover:bg-card/90 group">
       <div className="relative h-40">
         <Image
           src={station.imageUrl}
@@ -39,7 +39,8 @@ export default function StationCard({
         </span>
       </div>
       <div className="flex-1 flex flex-col px-6 py-4">
-        <div className="text-xs text-primary font-semibold mb-1">NOW PLAYING</div>
+        <div className="flex items-center text-primary font-semibold justify-between mb-2">{station.name} </div>
+        <div className="text-xs text-primary mb-1">NOW PLAYING</div>
         <div className="text-sm text-primary mb-4">{station.nowPlaying}</div>
         <div className="mt-auto flex flex-col gap-4">
           <div className="flex items-center gap-3">
