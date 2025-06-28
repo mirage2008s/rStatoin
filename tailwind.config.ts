@@ -10,8 +10,8 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-          body: ['Quicksand', 'sans-serif'],
-          headline: ['Quicksand', 'sans-serif'],
+          body: ['Reddit Sans', 'sans-serif'],
+          headline: ['Reddit Sans', 'sans-serif'],
           code: ['monospace'],
         },
       colors: {

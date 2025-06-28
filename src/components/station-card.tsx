@@ -33,6 +33,7 @@ export default function StationCard({
           sizes="(max-width: 768px) 100vw, 33vw"
           className="object-cover"
           data-ai-hint="radio station abstract"
+ priority
         />
         <span className="absolute top-3 left-3 bg-primary text-xs text-white font-bold px-3 py-1 rounded-full shadow">
           {station.badge || 'Radio'}
