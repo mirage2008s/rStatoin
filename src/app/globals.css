@@ -7,7 +7,7 @@ body {
 }
 
 @layer base {
-  :root {
+  /* :root {
     --background: 0 0% 93.3%;
     --foreground: 224 71.4% 4.1%;
     --card: 0 0% 100%;
@@ -41,7 +41,40 @@ body {
     --sidebar-accent-foreground: 240 5.9% 10%;
     --sidebar-border: 220 13% 91%;
     --sidebar-ring: 217.2 91.2% 59.8%;
+  } */
+  :root {
+    /* xoneFM Light Theme (default) */
+  
+    /* Backgrounds */
+    --background: 30 5% 12%;             /* Charcoal Black (Warm tone) */
+    --foreground: 0 0% 100%;           /* Pure White for text on black */
+  
+    /* Primary Brand Orange (main color) */
+    --primary-orange: 33 100% 50%;     /* #FF8C00 */
+  
+    /* Accent Brown (for darker details) */
+    --accent-brown: 23 75% 31%;        /* #8B4513 */
+  
+    /* Other UI Colors (adjust HSL as needed) */
+    --card: 0 0% 5%;                   /* Slightly lighter black for cards */
+    --card-foreground: 0 0% 100%;      /* White text on cards */
+    --border: 0 0% 10%;                /* Subtle dark border */
+    --input: 0 0% 15%;                 /* Dark input fields */
+    --ring: 33 100% 50%;               /* Focus ring color (primary orange) */
+    --radius: 0.5rem;                  /* Border radius variable if you use it */
+  
+    /* Neutral Grays - you'll likely want a full scale */
+    --neutral-50: 0 0% 98%;
+    --neutral-100: 0 0% 95%;
+    --neutral-200: 0 0% 90%;
+    /* ... up to 900 for a full scale or adjust if you use Tailwind's built-in grayscale with transparency */
+  
+    /* Success/Danger/Warning (you can keep these as hex/rgb if you prefer or convert to HSL) */
+    --success: 120 100% 35%; /* A standard green */
+    --danger: 0 100% 50%;    /* A standard red */
+    --warning: 40 100% 50%;  /* A standard yellow/amber */
   }
+  
   .dark {
     --background: 222 47% 11%;
     --foreground: 0 0% 98%;
