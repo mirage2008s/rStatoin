@@ -23,7 +23,14 @@ const nextConfig: NextConfig = {
         pathname: '/**',
       },
     ],
+    unoptimized: true,
   },
+  /* config for gh-pages deployment */
+  output: 'export',
+  basePath: '/rStatoin',
+  assetPrefix: '/rStatoin',
+  trailingSlash: true,
+  
 };
 
 export default nextConfig;
