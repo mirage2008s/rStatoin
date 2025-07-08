@@ -46,8 +46,8 @@ body {
     /* xoneFM Light Theme (default) */
   
     /* Backgrounds */
-    --background: 30 5% 12%;             /* Charcoal Black (Warm tone) */
-    --foreground: 0 0% 100%;           /* Pure White for text on black */
+    --background: 0 0% 12%;             /*  */          
+    --foreground: 0 0% 93%;           /*  */
   
     /* Primary Brand Orange (main color) */
     --primary-orange: 33 100% 50%;     /* #FF8C00 */

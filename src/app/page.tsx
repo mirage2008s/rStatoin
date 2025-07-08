@@ -5,7 +5,7 @@ import type { Station } from '@/lib/types';
 import { initialStations } from '@/lib/stations';
 import StationCard from '@/components/station-card';
 import Player from '@/components/player';
-import { Cctv, Radio } from 'lucide-react';
+import {Radio } from 'lucide-react';
 
 export default function Home() {
   const [stations] = useState<Station[]>(initialStations);

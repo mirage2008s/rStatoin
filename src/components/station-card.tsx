@@ -4,7 +4,6 @@ import Image from 'next/image';
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Heart, Share2 } from 'lucide-react';
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Play, Pause } from 'lucide-react';
 import type { Station } from '@/lib/types';
 

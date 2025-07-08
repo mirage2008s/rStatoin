@@ -2,7 +2,7 @@ export type Station = {
   id: string;
   name: string;
   streamUrl: string;
-  imageUrl: string | "https://via.placeholder.com/150";
+  imageUrl: string;
   genre?: string;
   language?: string;
   badge?: string;
