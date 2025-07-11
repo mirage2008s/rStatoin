@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from 'react';
 import type { Station } from '@/lib/types';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { Play, Pause, Mic, Square, Loader2 } from 'lucide-react';
+import { Play, Pause, Mic, Square, Loader} from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import type Hls from 'hls.js';
 
@@ -22,10 +22,20 @@ export default function Player({ station, isPlaying, onPlayPause }: PlayerProps)
   const recordedChunksRef = useRef<Blob[]>([]);
   const [isRecording, setIsRecording] = useState(false);
   const { toast } = useToast();
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
+
+    // Add loading event listeners
+    const handleWaiting = () => setIsLoading(true);
+    const handleCanPlay = () => setIsLoading(false);
+    const handlePlaying = () => setIsLoading(false);
+
+    audio.addEventListener('waiting', handleWaiting);
+    audio.addEventListener('canplay', handleCanPlay);
+    audio.addEventListener('playing', handlePlaying);
 
     const isM3u8 = station.streamUrl.endsWith('.m3u8');
 
@@ -109,10 +119,13 @@ export default function Player({ station, isPlaying, onPlayPause }: PlayerProps)
     }
     
     return () => {
-        if (hlsRef.current) {
-            hlsRef.current.destroy();
-            hlsRef.current = null;
-        }
+      audio.removeEventListener('waiting', handleWaiting);
+      audio.removeEventListener('canplay', handleCanPlay);
+      audio.removeEventListener('playing', handlePlaying);
+      if (hlsRef.current) {
+          hlsRef.current.destroy();
+          hlsRef.current = null;
+      }
     }
 
   }, [isPlaying, station, onPlayPause, toast]);
@@ -195,8 +208,14 @@ export default function Player({ station, isPlaying, onPlayPause }: PlayerProps)
           </div>
 
           <div className="flex items-center gap-2 flex-shrink-0">
-            <Button onClick={onPlayPause} size="icon" className="rounded-full w-12 h-12 bg-primary hover:bg-primary/90">
-              {isPlaying ? <Pause className="h-6 w-6" /> : <Play className="h-6 w-6 ml-1" />}
+            <Button onClick={onPlayPause} className="rounded-full bg-primary hover:bg-primary/90" disabled={isLoading}>
+              {isLoading ? (
+                <Loader className="animate-spin" size={48}/>
+              ) : isPlaying ? (
+                <Pause className="h-6 w-6" />
+              ) : (
+                <Play className="h-6 w-6 ml-1" />
+              )}
             </Button>
             <Button onClick={handleRecordToggle} size="icon" variant={isRecording ? "destructive" : "outline"} className="rounded-full w-12 h-12">
               {isRecording ? <Square className="h-5 w-5 fill-white" /> : <Mic className="h-5 w-5" />}
