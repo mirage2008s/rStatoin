@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from 'react';
 import type { Station } from '@/lib/types';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { Play, Pause, Mic, Square } from 'lucide-react';
+import { Play, Pause, Mic, Square, Loader2 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import type Hls from 'hls.js';
 

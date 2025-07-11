@@ -49,5 +49,37 @@ export const initialStations: Station[] = [
     imageUrl: '/rStatoin/images/acoustic_360x240.png',
     genre: 'Acoustic',
     badge: 'Zing MP3',
+  },
+  {
+    id: '7',
+    name: 'VOH 99.9 MHz',
+    streamUrl: 'https://strm.voh.com.vn/radio/channel3/chunklist_w683342790.m3u8',
+    imageUrl: 'https://picsum.photos/360/240?random=1',
+    genre: 'News',
+    badge: 'Radio',
+  },
+  {
+    id: '8',
+    name: 'MixFM 92.7',
+    streamUrl: 'https://n03.rcs.revma.com/z06q4stdwhruv?rj-ttl=5&rj-tok=AAABl_iBZfMAjJn98WGPNOQIkQ',
+    imageUrl: 'https://cdn.instant.audio/images/logos/radioau-net/mix-fm-927.png',
+    genre: 'Music',
+    badge: 'AU Station',
+  },
+  {
+    id: '9',
+    name: 'Classic FM',
+    streamUrl: 'https://mediaserviceslive.akamaized.net/hls/live/2038316/classicfmnsw/masterhq.m3u8',
+    imageUrl: 'https://picsum.photos/360/240?random=3',
+    genre: 'Classic',
+    badge: 'AU Station',
+  },
+  {
+    id: '10',
+    name: 'KISS 101.7',
+    streamUrl: 'https://n12.radiojar.com/u0swk1dw2vduv?rj-ttl=5&rj-tok=AAABl_iovl8A5N6sThJzo_0YQg',
+    imageUrl: 'https://picsum.photos/360/240?random=3',
+    genre: 'Hiphop',
+    badge: 'US Station',
   }
 ];
