@@ -70,7 +70,7 @@ export const initialStations: Station[] = [
     id: '9',
     name: 'Classic FM',
     streamUrl: 'https://mediaserviceslive.akamaized.net/hls/live/2038316/classicfmnsw/masterhq.m3u8',
-    imageUrl: 'https://picsum.photos/360/240?random=3',
+    imageUrl: 'https://picsum.photos/360/240?random=2',
     genre: 'Classic',
     badge: 'AU Station',
   },

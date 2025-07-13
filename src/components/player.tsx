@@ -208,9 +208,9 @@ export default function Player({ station, isPlaying, onPlayPause }: PlayerProps)
           </div>
 
           <div className="flex items-center gap-2 flex-shrink-0">
-            <Button onClick={onPlayPause} className="rounded-full bg-primary hover:bg-primary/90" disabled={isLoading}>
+            <Button onClick={onPlayPause} className="rounded-full w-12 h-12 bg-primary hover:bg-primary/90" disabled={isLoading}>
               {isLoading ? (
-                <Loader className="animate-spin" size={48}/>
+                <Loader className="animate-spin w-8 h-8"/>
               ) : isPlaying ? (
                 <Pause className="h-6 w-6" />
               ) : (
