@@ -12,7 +12,7 @@ export const initialStations: Station[] = [
   {
     id: '2',
     name: 'VOV2',
-    streamUrl: 'https://str.vov.gov.vn/vovlive/vov2.sdp_aac/chunklist_w1592569258.m3u8',
+    streamUrl: 'https://stream-cdn.vov.vn/live/vov2-audio_only.m3u8',
     imageUrl: '/rStatoin/images/vov2.png',
     genre: 'News',
     badge: 'Radio',
@@ -20,7 +20,7 @@ export const initialStations: Station[] = [
   {
     id: '3',
     name: 'VOV3',
-    streamUrl: 'https://str.vov.gov.vn/vovlive/vov3.sdp_aac/chunklist_w1816496431.m3u8',
+    streamUrl: 'https://stream-cdn.vov.vn/live/vov3-audio_only.m3u8',
     imageUrl: '/rStatoin/images/xfm-w.jpg',
     genre: 'News',
     badge: 'Radio',
@@ -61,7 +61,7 @@ export const initialStations: Station[] = [
   {
     id: '8',
     name: 'MixFM 92.7',
-    streamUrl: 'https://n03.rcs.revma.com/z06q4stdwhruv?rj-ttl=5&rj-tok=AAABl_iBZfMAjJn98WGPNOQIkQ',
+    streamUrl: 'https://n02.rcs.revma.com/z06q4stdwhruv?1752592146=&rj-tok=AAABmA6rNGEA9xdsw5c6OAkrrw&rj-ttl=5',
     imageUrl: 'https://cdn.instant.audio/images/logos/radioau-net/mix-fm-927.png',
     genre: 'Music',
     badge: 'AU Station',
