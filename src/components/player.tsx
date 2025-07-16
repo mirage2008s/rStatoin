@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
@@ -117,19 +116,19 @@ export default function Player({ station, isPlaying, onPlayPause }: PlayerProps)
         audio.src = '';
       }
     }
-    
+
     return () => {
       audio.removeEventListener('waiting', handleWaiting);
       audio.removeEventListener('canplay', handleCanPlay);
       audio.removeEventListener('playing', handlePlaying);
       if (hlsRef.current) {
-          hlsRef.current.destroy();
-          hlsRef.current = null;
+        hlsRef.current.destroy();
+        hlsRef.current = null;
       }
     }
 
   }, [isPlaying, station, onPlayPause, toast]);
-  
+
   const startRecording = () => {
     const audio = audioRef.current;
     if (!audio || audio.paused) {
@@ -145,7 +144,7 @@ export default function Player({ station, isPlaying, onPlayPause }: PlayerProps)
       // @ts-ignore
       const stream = audio.captureStream() || audio.mozCaptureStream();
       if (!stream) throw new Error("Stream capture not supported");
-      
+
       mediaRecorderRef.current = new MediaRecorder(stream);
       recordedChunksRef.current = [];
 
@@ -154,7 +153,7 @@ export default function Player({ station, isPlaying, onPlayPause }: PlayerProps)
           recordedChunksRef.current.push(event.data);
         }
       };
-      
+
       mediaRecorderRef.current.onstop = () => {
         const blob = new Blob(recordedChunksRef.current, { type: 'audio/webm' });
         const url = URL.createObjectURL(blob);
@@ -167,17 +166,17 @@ export default function Player({ station, isPlaying, onPlayPause }: PlayerProps)
         window.URL.revokeObjectURL(url);
         document.body.removeChild(a);
       };
-      
+
       mediaRecorderRef.current.start();
       setIsRecording(true);
       toast({ title: "Recording Started", description: `Recording ${station.name}.` });
     } catch(e) {
-        console.error("Error starting recording:", e);
-        toast({
-            variant: "destructive",
-            title: "Recording Error",
-            description: "Could not start recording. Your browser might not be supported.",
-        });
+      console.error("Error starting recording:", e);
+      toast({
+        variant: "destructive",
+        title: "Recording Error",
+        description: "Could not start recording. Your browser might not be supported.",
+      });
     }
   };
 
@@ -198,31 +197,53 @@ export default function Player({ station, isPlaying, onPlayPause }: PlayerProps)
   };
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 p-2 sm:p-4 z-50">
-      <audio ref={audioRef} id="audio-player" crossOrigin="anonymous" />
-      <Card className="container mx-auto p-3 sm:p-4 shadow-2xl bg-card/95 backdrop-blur-sm">
-        <div className="flex items-center justify-between gap-4">
-          <div className='flex-shrink min-w-0'>
-            <p className="font-semibold text-primary truncate">{station.name}</p>
-            <p className="text-sm text-muted-foreground">Now playing</p>
-          </div>
+      <div className="fixed bottom-0 left-0 right-0 p-4 z-50">
+        <audio ref={audioRef} id="audio-player" crossOrigin="anonymous" />
+        <div className="container mx-auto max-w-4xl">
+          <Card className="glass-effect border-white/20 shadow-2xl rounded-2xl overflow-hidden">
+            <div className="p-4 bg-gradient-to-r from-white/5 to-white/10">
+              <div className="flex items-center justify-between gap-4">
+                <div className='flex-shrink min-w-0'>
+                  <p className="font-semibold text-lg text-foreground truncate">{station.name}</p>
+                  <p className="text-sm text-foreground/70">Now playing</p>
+                </div>
 
-          <div className="flex items-center gap-2 flex-shrink-0">
-            <Button onClick={onPlayPause} className="rounded-full w-12 h-12 bg-primary hover:bg-primary/90" disabled={isLoading}>
-              {isLoading ? (
-                <Loader className="animate-spin w-8 h-8"/>
-              ) : isPlaying ? (
-                <Pause className="h-6 w-6" />
-              ) : (
-                <Play className="h-6 w-6 ml-1" />
-              )}
-            </Button>
-            <Button onClick={handleRecordToggle} size="icon" variant={isRecording ? "destructive" : "outline"} className="rounded-full w-12 h-12">
-              {isRecording ? <Square className="h-5 w-5 fill-white" /> : <Mic className="h-5 w-5" />}
-            </Button>
-          </div>
+                <div className="flex items-center gap-3 flex-shrink-0">
+                  <Button
+                      onClick={onPlayPause}
+                      className="rounded-full w-14 h-14 bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 border border-white/10"
+                      disabled={isLoading}
+                  >
+                    {isLoading ? (
+                        <Loader className="animate-spin w-6 h-6"/>
+                    ) : isPlaying ? (
+                        <Pause className="h-6 w-6" />
+                    ) : (
+                        <Play className="h-6 w-6 ml-1" />
+                    )}
+                  </Button>
+
+                  <Button
+                      onClick={handleRecordToggle}
+                      size="icon"
+                      variant={isRecording ? "destructive" : "outline"}
+                      className={`rounded-full w-14 h-14 transition-all duration-300 transform hover:scale-105 ${
+                          isRecording
+                              ? 'bg-red-500/80 backdrop-blur-sm border-red-400/30 hover:bg-red-500/70'
+                              : 'glass-button hover:bg-white/20'
+                      }`}
+                  >
+                    {isRecording ? (
+                        <Square className="h-5 w-5 fill-white" />
+                    ) : (
+                        <Mic className="h-5 w-5" />
+                    )}
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </Card>
         </div>
-      </Card>
-    </div>
+      </div>
   );
 }

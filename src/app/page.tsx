@@ -5,7 +5,7 @@ import type { Station } from '@/lib/types';
 import { initialStations } from '@/lib/stations';
 import StationCard from '@/components/station-card';
 import Player from '@/components/player';
-import {Radio } from 'lucide-react';
+import { Radio } from 'lucide-react';
 
 export default function Home() {
   const [stations] = useState<Station[]>(initialStations);
@@ -22,41 +22,53 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-background text-foreground pb-28">
-      <header className="p-6 border-b border-border/40 bg-card/50">
-        <div className="container mx-auto flex items-center justify-between gap-4">
-          <div className="flex items-center gap-4">
-            <Radio className="w-8 h-8 text-primary" />
-            <h1 className="text-3xl font-bold text-primary font-headline">Explosion of Sound</h1>
+      <div className="min-h-screen bg-gradient-to-br from-background via-background to-background/80 text-foreground pb-28 relative overflow-hidden">
+        {/* Background blur elements for depth */}
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-primary/10 pointer-events-none" />
+        <div className="absolute top-20 left-20 w-96 h-96 bg-primary/10 rounded-full blur-3xl opacity-20 animate-float" />
+        <div className="absolute bottom-20 right-20 w-80 h-80 bg-primary/5 rounded-full blur-3xl opacity-30 animate-float" style={{ animationDelay: '3s' }} />
+
+        <header className="relative z-10 p-6 glass-effect border-b border-white/10">
+          <div className="container mx-auto flex items-center justify-between gap-4">
+            <div className="flex items-center gap-4">
+              <div className="p-2 rounded-xl bg-primary/20 backdrop-blur-sm">
+                <Radio className="w-8 h-8 text-primary" />
+              </div>
+              <h1 className="text-3xl font-bold bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent font-headline">
+                Explosion of Sound
+              </h1>
+            </div>
           </div>
-        </div>
-      </header>
+        </header>
 
-      <main className="container mx-auto p-6">
-        <div className="mb-8">
-          <h2 className="text-2xl font-semibold text-primary mb-2">🤤Hello from the other side</h2>
-          <p className="text-muted-foreground">Discover a variety of radio stations from around the world.</p>
-        </div>
-        <div className="flex flex-wrap gap-6 justify-center items-center">
-          {stations.map(station => (
-            <StationCard
-              key={station.id}
-              station={station}
-              onPlayPause={() => handlePlayPause(station)}
-              isCurrent={currentStation?.id === station.id}
-              isPlaying={currentStation?.id === station.id && isPlaying}
+        <main className="container mx-auto p-6 relative z-10">
+          <div className="mb-8 text-center">
+            <h2 className="text-2xl font-semibold text-primary mb-2">🤤 Hello from the other side</h2>
+            <p className="text-foreground/70 max-w-2xl mx-auto">
+              Discover a variety of radio stations from around the world with our modern, frosted glass interface.
+            </p>
+          </div>
+
+          <div className="flex flex-wrap gap-6 justify-center items-center">
+            {stations.map(station => (
+                <StationCard
+                    key={station.id}
+                    station={station}
+                    onPlayPause={() => handlePlayPause(station)}
+                    isCurrent={currentStation?.id === station.id}
+                    isPlaying={currentStation?.id === station.id && isPlaying}
+                />
+            ))}
+          </div>
+        </main>
+
+        {currentStation && (
+            <Player
+                station={currentStation}
+                isPlaying={isPlaying}
+                onPlayPause={() => setIsPlaying(!isPlaying)}
             />
-          ))}
-        </div>
-      </main>
-
-      {currentStation && (
-        <Player
-          station={currentStation}
-          isPlaying={isPlaying}
-          onPlayPause={() => setIsPlaying(!isPlaying)}
-        />
-      )}
-    </div>
+        )}
+      </div>
   );
 }
