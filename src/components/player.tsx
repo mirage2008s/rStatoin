@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import type { Station } from '@/lib/types';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { Play, Pause, Mic, Square, Loader} from 'lucide-react';
+import { Play, Pause, Mic, Square, Loader, Plus, Minus, Volume2 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import type Hls from 'hls.js';
 
@@ -20,12 +20,40 @@ export default function Player({ station, isPlaying, onPlayPause }: PlayerProps)
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const recordedChunksRef = useRef<Blob[]>([]);
   const [isRecording, setIsRecording] = useState(false);
+  const [volume, setVolume] = useState(1);
+  const [isMuted, setIsMuted] = useState(false);
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
 
+  const audioContextRef = useRef<AudioContext | null>(null);
+  const gainNodeRef = useRef<GainNode | null>(null);
+  const sourceNodeRef = useRef<MediaElementAudioSourceNode | null>(null);
+
   useEffect(() => {
     const audio = audioRef.current;
+    console.log("Audio volume:", audio?.volume);
     if (!audio) return;
+
+    // Set initial volume
+    audio.volume = volume;
+
+        // Only create AudioContext and nodes once
+    if (!audioContextRef.current) {
+      audioContextRef.current = new (window.AudioContext)();
+      gainNodeRef.current = audioContextRef.current.createGain();
+
+      // Set gain based on station (example: boost for station.id === '5')
+      gainNodeRef.current.gain.value = (station.id === '1' || station.id === '2' || station.id === '3') ? 5.0 : 1.0;
+
+      // Only create source node once
+      if (!sourceNodeRef.current) {
+        sourceNodeRef.current = audioContextRef.current.createMediaElementSource(audio);
+        sourceNodeRef.current.connect(gainNodeRef.current).connect(audioContextRef.current.destination);
+      }
+    } else if (gainNodeRef.current) {
+      // Update gain if station changes
+      gainNodeRef.current.gain.value = (station.id === '1' || station.id === '2' || station.id === '3') ? 5.0 : 1.0;
+    }
 
     // Add loading event listeners
     const handleWaiting = () => setIsLoading(true);
@@ -129,6 +157,32 @@ export default function Player({ station, isPlaying, onPlayPause }: PlayerProps)
 
   }, [isPlaying, station, onPlayPause, toast]);
 
+  // Update audio volume when volume state changes
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (audio) {
+      audio.volume = isMuted ? 0 : volume;
+    }
+  }, [volume, isMuted]);
+
+  const handleVolumeUp = () => {
+    const newVolume = Math.min(volume + 0.1, 1);
+    setVolume(newVolume);
+    setIsMuted(false);
+  };
+
+  const handleVolumeDown = () => {
+    const newVolume = Math.max(volume - 0.1, 0);
+    setVolume(newVolume);
+    if (newVolume === 0) {
+      setIsMuted(true);
+    }
+  };
+
+  const handleMuteToggle = () => {
+    setIsMuted(!isMuted);
+  };
+
   const startRecording = () => {
     const audio = audioRef.current;
     if (!audio || audio.paused) {
@@ -209,6 +263,40 @@ export default function Player({ station, isPlaying, onPlayPause }: PlayerProps)
                 </div>
 
                 <div className="flex items-center gap-3 flex-shrink-0">
+
+                  {/*<div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-full p-1 border border-white/20">*/}
+                  {/*  <Button*/}
+                  {/*      onClick={handleVolumeDown}*/}
+                  {/*      size="sm"*/}
+                  {/*      variant="ghost"*/}
+                  {/*      className="rounded-full w-8 h-8 p-0 hover:bg-white/20 transition-colors"*/}
+                  {/*  >*/}
+                  {/*    <Minus className="h-4 w-4" />*/}
+                  {/*  </Button>*/}
+
+                  {/*  <Button*/}
+                  {/*      onClick={handleMuteToggle}*/}
+                  {/*      size="sm"*/}
+                  {/*      variant="ghost"*/}
+                  {/*      className="rounded-full w-8 h-8 p-0 hover:bg-white/20 transition-colors"*/}
+                  {/*  >*/}
+                  {/*    <Volume2 className={`h-4 w-4 ${isMuted ? 'text-red-400' : ''}`} />*/}
+                  {/*  </Button>*/}
+
+                  {/*  <Button*/}
+                  {/*      onClick={handleVolumeUp}*/}
+                  {/*      size="sm"*/}
+                  {/*      variant="ghost"*/}
+                  {/*      className="rounded-full w-8 h-8 p-0 hover:bg-white/20 transition-colors"*/}
+                  {/*  >*/}
+                  {/*    <Plus className="h-4 w-4" />*/}
+                  {/*  </Button>*/}
+
+                  {/*  <span className="text-xs text-foreground/70 min-w-[3rem] text-center">*/}
+                  {/*    {isMuted ? 'Muted' : `${Math.round(volume * 100)}%`}*/}
+                  {/*  </span>*/}
+                  {/*</div>*/}
+
                   <Button
                       onClick={onPlayPause}
                       className="rounded-full w-14 h-14 bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 border border-white/10"
