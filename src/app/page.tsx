@@ -1,25 +1,12 @@
 'use client';
 
-import { useState } from 'react';
-import type { Station } from '@/lib/types';
-import { initialStations } from '@/lib/stations';
 import StationCard from '@/components/station-card';
 import Player from '@/components/player';
+import { usePlayerContext } from '@/context/player-context';
 import { Radio } from 'lucide-react';
 
 export default function Home() {
-    const [stations] = useState<Station[]>(initialStations);
-    const [currentStation, setCurrentStation] = useState<Station | null>(null);
-    const [isPlaying, setIsPlaying] = useState<boolean>(false);
-
-    const handlePlayPause = (station: Station) => {
-        if (currentStation?.id === station.id) {
-            setIsPlaying(!isPlaying);
-        } else {
-            setCurrentStation(station);
-            setIsPlaying(true);
-        }
-    };
+    const { stations, currentStation } = usePlayerContext();
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-background via-background to-background/80 text-foreground pb-28 relative overflow-hidden">
@@ -43,33 +30,20 @@ export default function Home() {
 
             <main className="container mx-auto p-4 sm:p-6 relative z-10">
                 <div className="mb-6 sm:mb-8 text-center">
-                    <h2 className="text-xl sm:text-2xl font-semibold text-primary mb-2">🤤 Hello from the other side</h2>
+                    <h2 className="text-xl sm:text-2xl font-semibold text-primary mb-2"> Hello from the other side</h2>
                     <p className="text-sm sm:text-base text-foreground/70 max-w-2xl mx-auto">
                         Discover a variety of radio stations from around the world.
                     </p>
                 </div>
 
-                {/* Responsive grid layout for better mobile experience */}
                 <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-2 gap-y-4 sm:gap-6 justify-items-center">
                     {stations.map(station => (
-                        <StationCard
-                            key={station.id}
-                            station={station}
-                            onPlayPause={() => handlePlayPause(station)}
-                            isCurrent={currentStation?.id === station.id}
-                            isPlaying={currentStation?.id === station.id && isPlaying}
-                        />
+                        <StationCard key={station.id} station={station} />
                     ))}
                 </div>
             </main>
 
-            {currentStation && (
-                <Player
-                    station={currentStation}
-                    isPlaying={isPlaying}
-                    onPlayPause={() => setIsPlaying(!isPlaying)}
-                />
-            )}
+            {currentStation && <Player />}
         </div>
     );
 }

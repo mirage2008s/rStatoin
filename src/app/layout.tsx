@@ -1,28 +1,42 @@
-import type {Metadata} from 'next';
+import type { Metadata } from 'next';
+import { Reddit_Sans } from 'next/font/google';
+import { PlayerProvider } from '@/context/player-context';
+import { Toaster } from '@/components/ui/toaster';
 import './globals.css';
-import { Toaster } from "@/components/ui/toaster"
 
+// Set up the font used in your global stylesheet for optimal performance.
+const redditSans = Reddit_Sans({
+    subsets: ['latin'],
+    display: 'swap',
+    variable: '--font-reddit-sans',
+});
+
+// Define metadata for your application for better SEO.
 export const metadata: Metadata = {
-  title: 'Explosion of Sound',
-  description: 'An online radio player with record features.',
+    title: 'rStatoin - Explosion of Sound',
+    description: 'Discover and listen to a variety of radio stations from around the world.',
 };
 
+/**
+ * This is the root layout component for the application.
+ * It wraps all pages with the PlayerProvider to supply global state.
+ */
 export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
+                                       children,
+                                   }: Readonly<{
+    children: React.ReactNode;
 }>) {
-  return (
-    <html lang="en">
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com"/>
-        <link rel="preconnect" href="https://fonts.gstatic.com" />
-        <link href="https://fonts.googleapis.com/css2?family=Reddit+Sans:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet"/>
-      </head>
-      <body className="font-body antialiased">
-        {children}
+    return (
+        <html lang="en" className="dark">
+        <body className={redditSans.className}>
+        {/* The PlayerProvider wraps your entire application, making player state globally accessible. */}
+        <PlayerProvider>
+            {children}
+        </PlayerProvider>
+
+        {/* The Toaster component is placed here to handle all toast notifications globally. */}
         <Toaster />
-      </body>
-    </html>
-  );
+        </body>
+        </html>
+    );
 }
