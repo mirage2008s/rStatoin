@@ -7,7 +7,8 @@ export const initialStations: Station[] = [
     streamUrl: 'https://stream-cdn.vov.vn/live/vov1-audio_only.m3u8',
     imageUrl: '/rStatoin/images/vov1-logo_540x360.png',
     genre: 'News',
-    badge: 'Radio',
+    category: 'VN Radio',
+    badge:'Thời sự',
   },
   {
     id: '2',
@@ -15,23 +16,25 @@ export const initialStations: Station[] = [
     streamUrl: 'https://stream-cdn.vov.vn/live/vov2-audio_only.m3u8',
     imageUrl: '/rStatoin/images/vov2-logo_540x360.png',
     genre: 'News',
-    badge: 'Radio',
+    category: 'VN Radio',
+    badge:'Văn hoá - thể thao',
   },
   {
     id: '3',
     name: 'VOV3',
     streamUrl: 'https://stream-cdn.vov.vn/live/vov3-audio_only.m3u8',
     imageUrl: '/rStatoin/images/xfm-w.jpg',
-    genre: 'News',
-    badge: 'Radio',
+    genre: 'Music',
+    category: 'VN Radio',
+    badge:'Âm nhạc',
   },
   {
     id: '4',
     name: 'VPOP - Zing Live',
     streamUrl: 'https://vnso-pt-48-tf-multi-playlist-zmp3.zmdcdn.me/JB2zPitWC-s/zhls/playback-realtime/audio/6ddadf76e3330a6d5322/audio.m3u8',
     imageUrl: '/rStatoin/images/cassette_240x160.png',
-    genre: 'VPop',
-    badge: 'Zing MP3',
+    genre: 'Vpop',
+    category: 'Zing Live',
     nowPlaying: 'Tramlee - You better run run!',
   },
   {
@@ -40,7 +43,7 @@ export const initialStations: Station[] = [
     streamUrl: 'https://vnso-pt-37-tf-multi-playlist-zmp3.zmdcdn.me/5k37-bBNjIU/zhls/playback-realtime/audio/f49e38320477ed29b466/audio.m3u8',
     imageUrl: '/rStatoin/images/usuk_360x240.png',
     genre: 'US-UK',
-    badge: 'Zing MP3',
+    category: 'Zing Live',
   },
   {
     id: '6',
@@ -48,7 +51,7 @@ export const initialStations: Station[] = [
     streamUrl: 'https://vnso-pt-53-tf-multi-playlist-zmp3.zmdcdn.me/4TX5Vj5v__E/zhls/playback-realtime/audio/9b7b55d7699280ccd983/audio.m3u8',
     imageUrl: '/rStatoin/images/acoustic_360x240.png',
     genre: 'Acoustic',
-    badge: 'Zing MP3',
+    category: 'Zing Live',
   },
   {
     id: '7',
@@ -56,15 +59,16 @@ export const initialStations: Station[] = [
     streamUrl: 'https://strm.voh.com.vn/radio/channel3/chunklist_w683342790.m3u8',
     imageUrl: '/rStatoin/images/voh-99.9_640x360.png',
     genre: 'News',
-    badge: 'Radio',
+    category: 'VN Radio',
+    badge: 'Tiếng nói thành phố HCM'
   },
   {
     id: '8',
     name: 'MixFM 92.7',
     streamUrl: 'https://n02.rcs.revma.com/z06q4stdwhruv?1752592146=&rj-tok=AAABmA6rNGEA9xdsw5c6OAkrrw&rj-ttl=5',
     imageUrl: '/rStatoin/images/MixFM_logo-640x480.png',
-    genre: 'Music',
-    badge: 'AU Station',
+    genre: 'Mix',
+    category: 'Global Station',
   },
   {
     id: '9',
@@ -72,7 +76,7 @@ export const initialStations: Station[] = [
     streamUrl: 'https://mediaserviceslive.akamaized.net/hls/live/2038316/classicfmnsw/masterhq.m3u8',
     imageUrl: '/rStatoin/images/classicFM-logo_540x360.png',
     genre: 'Classic',
-    badge: 'AU Station',
+    category: 'Global Station',
   },
   {
     id: '10',
@@ -80,6 +84,6 @@ export const initialStations: Station[] = [
     streamUrl: 'https://n12.radiojar.com/u0swk1dw2vduv?rj-ttl=5&rj-tok=AAABl_iovl8A5N6sThJzo_0YQg',
     imageUrl: '/rStatoin/images/kiss101_540x360.png',
     genre: 'Hiphop',
-    badge: 'US Station',
+    category: 'Global Station',
   }
 ];

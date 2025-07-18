@@ -18,10 +18,25 @@ export default function StationCard({ station }: StationCardProps) {
 
   return (
       <Card className="w-full max-w-[200px] sm:max-w-none glass-effect overflow-hidden rounded-xl border-white/20 shadow-lg">
-        <CardContent className="p-4">
-          <div className="aspect-square bg-muted rounded-lg mb-4 bg-cover bg-center" style={{backgroundImage: `url(${station.imageUrl})`}}/>
-          <h3 className="font-semibold truncate text-base">{station.name}</h3>
-          <p className="text-sm text-foreground/60 truncate">{station.genre}</p>
+        <CardContent className="p-1">
+            {/* A relative container is needed to position the badge correctly. */}
+            <div className="relative mb-4">
+                <div
+                    className="aspect-video bg-muted rounded-lg bg-cover bg-center"
+                    style={{backgroundImage: `url(${station.imageUrl})`}}
+                />
+
+                {/* The badge is rendered only if the station has one. */}
+                {station.genre && (
+                    <div className="absolute top-1 left-2 p-1 bg-white/20 backdrop-blur-md rounded-xl border border-white/30 shadow-lg">
+                        <div className="text-xs text-primary font-bold">{station.genre}</div>
+                    </div>
+                )}
+            </div>
+            <div className="p-2">
+                <h3 className="font-semibold truncate text-base">{station.name}</h3>
+                <p className="text-sm text-foreground/60 truncate">{station.badge}</p>
+            </div>
         </CardContent>
         <CardFooter className="p-2">
           <Button

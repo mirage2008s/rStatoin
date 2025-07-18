@@ -4,7 +4,7 @@ export type Station = {
   streamUrl: string;
   imageUrl: string;
   genre?: string;
-  language?: string;
   badge?: string;
   nowPlaying?: string
+  category?: string;
 };

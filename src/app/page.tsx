@@ -4,9 +4,20 @@ import StationCard from '@/components/station-card';
 import Player from '@/components/player';
 import { usePlayerContext } from '@/context/player-context';
 import { Radio } from 'lucide-react';
+import type { Station } from '@/lib/types';
 
 export default function Home() {
     const { stations, currentStation } = usePlayerContext();
+
+    // Group stations by their genre for categorized display.
+    const stationsByCategory = stations.reduce((acc, station) => {
+        const category = station.category || 'Uncategorized'; // Default category
+        if (!acc[category]) {
+            acc[category] = [];
+        }
+        acc[category].push(station);
+        return acc;
+    }, {} as Record<string, Station[]>);
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-background via-background to-background/80 text-foreground pb-28 relative overflow-hidden">
@@ -28,21 +39,35 @@ export default function Home() {
                 </div>
             </header>
 
-            <main className="container mx-auto p-4 sm:p-6 relative z-10">
-                <div className="mb-6 sm:mb-8 text-center">
+            <main className="container mx-auto py-4 sm:py-6 relative z-10">
+                <div className="mb-6 sm:mb-8 text-center px-4">
                     <h2 className="text-xl sm:text-2xl font-semibold text-primary mb-2"> Hello from the other side</h2>
                     <p className="text-sm sm:text-base text-foreground/70 max-w-2xl mx-auto">
                         Discover a variety of radio stations from around the world.
                     </p>
                 </div>
 
-                <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-2 gap-y-4 sm:gap-6 justify-items-center">
-                    {stations.map(station => (
-                        <StationCard key={station.id} station={station} />
+                <div className="space-y-10">
+                    {Object.entries(stationsByCategory).map(([category, stationsInCategory]) => (
+                        <section className="p-2" key={category}>
+                            <h2 className="text-xl text-primary font-bold tracking-tight mb-2 px-2 sm:px-0">{category}</h2>
+                            <div className="relative">
+                                {/* This container enables horizontal scrolling on overflow. */}
+                                <div className="flex space-x-4 overflow-x-auto pb-4 -mx-4 px-4">
+                                    {stationsInCategory.map(station => (
+                                        // Each card is wrapped to control its size and prevent shrinking.
+                                        <div key={station.id} className="w-48 flex-shrink-0">
+                                            <StationCard station={station} />
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        </section>
                     ))}
                 </div>
             </main>
 
+            {/* The player remains fixed at the bottom if a station is selected. */}
             {currentStation && <Player />}
         </div>
     );
