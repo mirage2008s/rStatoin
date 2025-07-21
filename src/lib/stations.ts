@@ -85,5 +85,16 @@ export const initialStations: Station[] = [
     imageUrl: '/rStatoin/images/kiss101_540x360.png',
     genre: 'Hiphop',
     category: 'Global Station',
+  },
+  {
+    id: '11',
+    name: 'HeartUK',
+    streamUrl: 'https://media-ssl.musicradio.com/HeartUK',
+    imageUrl: 'https://static.mytuner.mobi/media/tvos_radios/lhqtqzszwrvu.png',
+    genre: 'Mix',
+    category: 'Global Station',
+    badge: 'London\'s Heart 106.2: Non-Stop Good Vibes',
   }
+  // https://media-ssl.musicradio.com/HeartUK
+
 ];

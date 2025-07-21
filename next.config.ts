@@ -16,21 +16,18 @@ const nextConfig: NextConfig = {
         port: '',
         pathname: '/**',
       },
-      {
-        protocol: 'https',
-        hostname: 'picsum.photos',
-        port: '',
-        pathname: '/**',
-      },
     ],
     unoptimized: true,
   },
   /* config for gh-pages deployment */
   output: 'export',
-  basePath: '/rStatoin',
-  assetPrefix: '/rStatoin',
+  // comment for custom domain
+  // basePath: '/rStatoin',
+  // assetPrefix: '/rStatoin',
+  // trailingSlash: true,
+  basePath: '',
+  assetPrefix: '',
   trailingSlash: true,
-  
 };
 
 export default nextConfig;

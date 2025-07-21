@@ -13,7 +13,7 @@ const redditSans = Reddit_Sans({
 
 // Define metadata for your application for better SEO.
 export const metadata: Metadata = {
-    title: 'rStatoin - Explosion of Sound',
+    title: 'Explosion of Sound',
     description: 'Discover and listen to a variety of radio stations from around the world.',
 };
 

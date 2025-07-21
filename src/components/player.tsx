@@ -21,11 +21,11 @@ export default function Player() {
       <div className="fixed bottom-0 left-0 right-0 p-4 z-50">
         <audio ref={audioRef} id="audio-player" crossOrigin="anonymous" />
         <div className="container mx-auto max-w-4xl">
-          <Card className="glass-effect border-white/20 shadow-2xl rounded-2xl overflow-hidden">
-            <div className="p-4 bg-gradient-to-r from-white/5 to-white/10">
+          <Card className="glass-primary border-white/20 shadow-2xl rounded-2xl overflow-hidden">
+            <div className="p-4">
               <div className="flex items-center justify-between gap-4">
                 <div className="flex-shrink min-w-0">
-                  <p className="font-semibold text-lg text-foreground truncate">{currentStation.name}</p>
+                  <p className="font-semibold text-lg sgradient-text truncate">{currentStation.name}</p>
                   <p className="text-sm text-foreground/70">Now playing</p>
                 </div>
                 <div className="flex items-center gap-3 flex-shrink-0">

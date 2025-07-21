@@ -4,7 +4,7 @@ import type { Station } from '@/lib/types';
 import { usePlayerContext } from '@/context/player-context';
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Play, Pause } from 'lucide-react';
+import { Play, Pause, Heart, Share2 } from 'lucide-react';
 
 interface StationCardProps {
   station: Station;
@@ -17,37 +17,47 @@ export default function StationCard({ station }: StationCardProps) {
   const isThisCardPlaying = isCurrent && isPlaying;
 
   return (
-      <Card className="w-full max-w-[200px] sm:max-w-none glass-effect overflow-hidden rounded-xl border-white/20 shadow-lg">
-        <CardContent className="p-1">
-            {/* A relative container is needed to position the badge correctly. */}
-            <div className="relative mb-4">
-                <div
-                    className="aspect-video bg-muted rounded-lg bg-cover bg-center"
-                    style={{backgroundImage: `url(${station.imageUrl})`}}
-                />
+    <Card className="flex flex-col h-full min-h-64 glass-card overflow-hidden rounded-xl border-white/20 shadow-lg">
+      {/* This content area will grow to fill available space */}
+      <CardContent className="p-1 flex-grow">
+        {/* A relative container is needed to position the badge correctly. */}
+        <div className="relative">
+          <div
+            className="aspect-video bg-muted rounded-lg bg-cover bg-center"
+            style={{ backgroundImage: `url(${station.imageUrl})` }}
+          />
 
-                {/* The badge is rendered only if the station has one. */}
-                {station.genre && (
-                    <div className="absolute top-1 left-2 p-1 bg-white/20 backdrop-blur-md rounded-xl border border-white/30 shadow-lg">
-                        <div className="text-xs text-primary font-bold">{station.genre}</div>
-                    </div>
-                )}
+          {/* The badge is rendered only if the station has one. */}
+          {station.genre && (
+            <div className="absolute top-1 left-2 p-1 bg-white/20 backdrop-blur-md rounded-xl border border-white/30 shadow-lg">
+              <div className="text-xs text-primary font-bold">{station.genre}</div>
             </div>
-            <div className="p-2">
-                <h3 className="font-semibold truncate text-base">{station.name}</h3>
-                <p className="text-sm text-foreground/60 truncate">{station.badge}</p>
-            </div>
-        </CardContent>
-        <CardFooter className="p-2">
+          )}
+        </div>
+        <div className="p-2">
+          <h3 className="font-semibold truncate text-base">{station.name}</h3>
+          <p className="text-sm text-foreground/60 truncate">{station.badge}</p>
+        </div>
+      </CardContent>
+      <CardFooter className="p-2 pt-0">
+        <div className="flex items-center gap-1 justify-between">
           <Button
-              onClick={() => handlePlayPause(station)}
-              className="w-full"
-              variant={isThisCardPlaying ? 'secondary' : 'default'}
+            onClick={() => handlePlayPause(station)}
+            className="rounded-full bg-primary hover:bg-primary/90 transition-all duration-300"
           >
-            {isThisCardPlaying ? <Pause className="mr-2 h-4 w-4" /> : <Play className="mr-2 h-4 w-4" />}
-            {isThisCardPlaying ? 'Pause' : 'Play'}
+            {isThisCardPlaying ? <Pause className="" /> : <Play className="" />}
+            {isThisCardPlaying ? 'Pause' : 'Tune In'}
           </Button>
-        </CardFooter>
-      </Card>
+          <button className="p-2 rounded-full glass-button">
+            <Heart className="h-4 w-4 text-foreground hover:text-primary" />
+          </button>
+
+          <button className="p-2 rounded-full glass-button">
+            <Share2 className="h-4 w-4 icon text-foreground hover:text-primary" />
+          </button>
+        </div>
+
+      </CardFooter>
+    </Card>
   );
 }

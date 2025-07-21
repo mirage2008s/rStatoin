@@ -10,7 +10,8 @@ body {
   :root {
     /* Enhanced frosted glass theme */
     --background: 0 0% 8%;             /* Darker background */
-    --foreground: 0 0% 95%;           /* Light foreground */
+    --foreground: 0 0% 95%;
+    --bg-darkg: 147 100% 15%;           /* dard green background */
 
     /* Primary Brand Orange */
     --primary-orange: 33 100% 50%;     /* #FF8C00 */
@@ -38,10 +39,10 @@ body {
   }
 
   .dark {
-    --background: 222 47% 11%;
+    /* --background: 222 47% 11%;
     --foreground: 0 0% 98%;
     --card: 222 47% 11%;
-    --card-foreground: 0 0% 98%;
+    --card-foreground: 0 0% 98%; */
     --popover: 222 47% 11%;
     --popover-foreground: 0 0% 98%;
     --primary: 231 48% 48%;
@@ -54,9 +55,9 @@ body {
     --accent-foreground: 0 0% 98%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 14.9%;
-    --input: 0 0% 14.9%;
-    --ring: 231 48% 48%;
+    /* --border: 0 0% 14.9%; */
+    /* --input: 0 0% 14.9%; */
+    /* --ring: 231 48% 48%; */
     --chart-1: 220 70% 50%;
     --chart-2: 160 60% 45%;
     --chart-3: 30 80% 55%;
@@ -83,15 +84,33 @@ body {
 }
 
 @layer utilities {
-  .glass-effect {
-    @apply bg-white/10 backdrop-blur-xl border border-white/20 shadow-glass;
+  .glass-primary {
+    @apply bg-white/10 backdrop-blur-md border border-white/20 shadow-glass;
   }
 
   .glass-card {
-    @apply bg-white/5 backdrop-blur-2xl border border-white/10 shadow-glass shadow-glass-inset;
+    @apply bg-white/10 backdrop-blur-2xl border border-white/20 shadow-glass shadow-glass-inset;
+    @apply bg-gradient-to-br from-white/20 via-transparent to-white/40;
   }
 
   .glass-button {
     @apply bg-white/10 backdrop-blur-md border border-white/20 hover:bg-white/20 transition-all duration-300;
   }
+
+  .glass-effect {
+    @apply bg-white/10 backdrop-blur-md border border-white/20 shadow-glass;
+  }
+
+  .sgradient-text {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-foreground to-primary;
+  }
+
+  .section-title {
+    @apply text-xl sgradient-text font-bold tracking-tight mb-6 pb-2 border-b-2 border-white;
+  }
+  .section-title2 {
+    @apply text-xl sgradient-text font-bold tracking-tight mb-4 underline decoration-white decoration-1 underline-offset-8;
+  }
+
+
 }

@@ -82,7 +82,7 @@ export default {
         '4xl': '72px',
       },
       boxShadow: {
-        'glass': '0 8px 32px 0 rgba(31, 38, 135, 0.37)',
+        'glass': '0 5px 10px 0 rgba(255, 99, 61, 0.2)',
         'glass-inset': 'inset 0 -1px 0 0 rgba(255, 255, 255, 0.1)',
       },
       keyframes: {
