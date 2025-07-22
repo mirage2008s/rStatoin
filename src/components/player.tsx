@@ -3,7 +3,7 @@
 import { usePlayerContext } from '@/context/player-context';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { Play, Pause, Mic, Square, Loader } from 'lucide-react';
+import { Play, Pause, AudioLines, Square, Loader } from 'lucide-react';
 import { usePlayer } from '@/hooks/use-player';
 import { useRecorder } from '@/hooks/use-recorder';
 import VolumeControl from './volume-control';
@@ -22,13 +22,13 @@ export default function Player() {
         <audio ref={audioRef} id="audio-player" crossOrigin="anonymous" />
         <div className="container mx-auto max-w-4xl">
           <Card className="glass-primary border-white/20 shadow-2xl rounded-2xl overflow-hidden">
-            <div className="p-4">
+            <div className="p-2">
               <div className="flex items-center justify-between gap-4">
                 <div className="flex-shrink min-w-0">
                   <p className="font-semibold text-lg sgradient-text truncate">{currentStation.name}</p>
                   <p className="text-sm text-foreground/70">Now playing</p>
                 </div>
-                <div className="flex items-center gap-3 flex-shrink-0">
+                <div className="flex items-center gap-1 sm:gap-3 flex-shrink-0">
                   <VolumeControl audioRef={audioRef} />
                   <Button
                       onClick={togglePlayPause}
@@ -45,7 +45,7 @@ export default function Player() {
                       className={`rounded-full w-10 h-10 p-0 transition-colors ${isRecording ? 'bg-red-500/80 text-white' : 'hover:bg-white/20'}`}
                       aria-label={isRecording ? 'Stop recording' : 'Start recording'}
                   >
-                    {isRecording ? <Square className="h-5 w-5" /> : <Mic className="h-5 w-5" />}
+                    {isRecording ? <Square className="h-5 w-5" /> : <AudioLines className="h-5 w-5" />}
                   </Button>
                 </div>
               </div>

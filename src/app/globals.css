@@ -85,12 +85,11 @@ body {
 
 @layer utilities {
   .glass-primary {
-    @apply bg-white/10 backdrop-blur-md border border-white/20 shadow-glass;
+    @apply bg-white/10 backdrop-blur-xl border border-white/20 shadow-glass;
   }
 
   .glass-card {
-    @apply bg-white/10 backdrop-blur-2xl border border-white/20 shadow-glass shadow-glass-inset;
-    @apply bg-gradient-to-br from-white/20 via-transparent to-white/40;
+    @apply bg-white/5 backdrop-blur-2xl border border-white/10 shadow-glass shadow-glass-inset;
   }
 
   .glass-button {
@@ -107,9 +106,6 @@ body {
 
   .section-title {
     @apply text-xl sgradient-text font-bold tracking-tight mb-6 pb-2 border-b-2 border-white;
-  }
-  .section-title2 {
-    @apply text-xl sgradient-text font-bold tracking-tight mb-4 underline decoration-white decoration-1 underline-offset-8;
   }
 
 

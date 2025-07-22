@@ -45,7 +45,7 @@ export default function VolumeControl({ audioRef }: VolumeControlProps) {
     };
 
     return (
-        <div className="flex items-center gap-2 w-32">
+        <div className="flex items-center gap-2 sm:w-32">
             <Button
                 onClick={handleMuteToggle}
                 size="icon"
@@ -57,10 +57,10 @@ export default function VolumeControl({ audioRef }: VolumeControlProps) {
             </Button>
             <Slider
                 max={1}
-                step={0.05}
+                step={0.1}
                 value={[isMuted ? 0 : volume]}
                 onValueChange={handleVolumeChange}
-                className="w-full"
+                className="hidden sm:flex w-full"
                 aria-label="Volume slider"
             />
         </div>

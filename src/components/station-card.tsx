@@ -17,7 +17,7 @@ export default function StationCard({ station }: StationCardProps) {
   const isThisCardPlaying = isCurrent && isPlaying;
 
   return (
-    <Card className="flex flex-col h-full min-h-64 glass-card overflow-hidden rounded-xl border-white/20 shadow-lg">
+    <Card className="flex flex-col h-full min-h-56 w-40 sm:w-48 glass-card overflow-hidden rounded-xl border-white/20 shadow-lg">
       {/* This content area will grow to fill available space */}
       <CardContent className="p-1 flex-grow">
         {/* A relative container is needed to position the badge correctly. */}
@@ -52,7 +52,7 @@ export default function StationCard({ station }: StationCardProps) {
             <Heart className="h-4 w-4 text-foreground hover:text-primary" />
           </button>
 
-          <button className="p-2 rounded-full glass-button">
+          <button className="hidden sm:inline p-2 rounded-full glass-button">
             <Share2 className="h-4 w-4 icon text-foreground hover:text-primary" />
           </button>
         </div>

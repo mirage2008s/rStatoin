@@ -54,10 +54,10 @@ export default function Home() {
                             </div>
                             <div className="relative">
                                 {/* This container enables horizontal scrolling on overflow. */}
-                                <div className="flex space-x-6 overflow-x-auto pb-4 -mx-4 px-4 align-items-stretch">
+                                <div className="flex space-x-4 overflow-x-auto pb-4 -mx-4 px-4">
                                     {stationsInCategory.map(station => (
                                         // Each card is wrapped to control its size and prevent shrinking.
-                                        <div key={station.id} className="w-48 flex-shrink-0">
+                                        <div key={station.id} className="">
                                             <StationCard station={station} />
                                         </div>
                                     ))}
