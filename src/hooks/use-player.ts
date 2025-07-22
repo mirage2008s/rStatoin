@@ -24,6 +24,9 @@ export const usePlayer = (
         const audio = audioRef.current;
         if (!audio) return;
 
+        // Add this line to fix CORS for Icecast/AAC streams
+        audio.crossOrigin = 'anonymous';
+
         // Set up event listeners to track the loading state of the audio.
         const handleLoading = () => setIsLoading(true);
         const handlePlaying = () => setIsLoading(false);
